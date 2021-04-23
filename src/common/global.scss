@@ -1,0 +1,10 @@
+@use "./base.scss";
+
+body{
+    margin: 0;
+    padding: 0;
+    background: url("../assets/circle-blues.png");
+    color: base.$mainColor;
+    font-family: base.$mainFontFamily;
+}
+

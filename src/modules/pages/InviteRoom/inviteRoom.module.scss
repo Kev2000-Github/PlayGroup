@@ -1,0 +1,15 @@
+@use "../../../common/base.scss";
+
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    .menu{
+        margin-top: 80px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+}

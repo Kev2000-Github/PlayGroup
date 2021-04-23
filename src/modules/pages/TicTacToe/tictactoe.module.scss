@@ -1,0 +1,123 @@
+@use "../../../common/base.scss";
+
+%disablingBlock{
+    &::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        transition: .3s all;
+        pointer-events: none;
+    }
+    &.disabled{
+        pointer-events: none;
+        cursor: initial;
+        &::after{
+            background: #3a496942;
+            pointer-events: initial;
+        }
+    }
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    .card{
+        transition: .4s;
+        text-align: center;
+        width: 500px;
+        height: 400px;
+        padding: 0;
+        background: rgba(7, 15, 52, 0.4);
+        overflow: hidden;
+        &.started{
+            align-self: center;
+            margin-top: 0;
+        }
+        .playgrid{
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            position: relative;
+            @extend %disablingBlock;
+            div:nth-child(3n+1){
+                border-left: none;
+            }
+            div:nth-child(-n+3){
+                border-top: none;
+            }
+            div{
+                border-left: 1.5px solid #656b778f;
+                border-top: 1.5px solid #656b778f;
+                user-select: none;
+                position: relative;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &.winner{
+                    background: rgb(255, 186, 38);
+                    border: rgb(255, 186, 38);
+                }
+                .symbolPlayed{
+                    width: 90px;
+                    height: 90px;
+                }
+                &.disabled{
+                    pointer-events: none;
+                    cursor: initial;
+                    &::before{
+                        background: #31374442;
+                    }
+                }
+                &::before{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    background: transparent;
+                    transition: .3s;
+                }
+                &:hover{
+                    &::before{
+                        background: #31374442;
+                    }
+                }
+            }
+        }
+    }
+    .playerCard{
+        margin: 60px;
+    }
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    h4{
+        margin: 0;
+        padding: 0;
+    }
+    span{
+        font-weight: 400;
+    }
+    button{
+        margin-top: 30px;
+    }
+}
+
+.invitationLink{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

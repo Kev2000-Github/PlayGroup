@@ -1,0 +1,58 @@
+@use "../../../common/base.scss";
+
+.button{
+    background: #F9F9F9;
+    color: rgba(23, 17, 77, 0.64);
+    font-family: base.$mainFontFamily;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding: 10px;
+    text-align: center;
+    border-radius: 6px;
+    border: none;
+    position: relative;
+    display:flex;
+    flex-direction: row;
+    cursor: pointer;
+    min-width: 150px;
+    max-width: 200px;
+    .play{
+        margin: 0 5px 0 0;
+        pointer-events: none;
+    }
+    &:hover{
+        background: #acabab;
+        .play{
+            opacity: .7;
+        }
+    }
+    &::before{
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        border: inherit;
+        background: #7E7B7B;
+        position: absolute;
+        top: 2px;
+        left: 0px;
+        z-index: -2;
+    }
+    &.disabled{
+        opacity: .6;
+        pointer-events: none;
+        background: #b1afaf;
+        &::before{
+            opacity: .6;
+        }
+    }
+    &.blocked{
+        background: #cccccc;
+        pointer-events: none;
+    }
+    &.loading{
+        opacity: .8;
+        pointer-events: none;
+        background: #cccccc;
+    }
+}

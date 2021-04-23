@@ -1,0 +1,241 @@
+@use "../../../common/base.scss";
+
+%disablingBlock{
+    &::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        transition: .3s all;
+        pointer-events: none;
+    }
+    &.disabled{
+        pointer-events: none;
+        cursor: initial;
+        &::after{
+            background: #3a496942;
+            pointer-events: initial;
+        }
+    }
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    .giveUpBlock{
+        position: absolute;
+        top: 50%;
+        left: 50px;
+        &::before{
+            content: "Give up";
+            position: absolute;
+            font-family: base.$mainFontFamily;
+            font-size: 1.2rem;
+            top: -20px;
+            right: 0px;
+            opacity: 0;
+            transition: .4s;
+            transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+            color: white;
+        }
+        &::after{
+            content: "";
+            width: 80px;
+            height: 1px;
+            background: white;
+            position: absolute;
+            transition: .4s;
+            transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+            top: 6px;
+            right: -50px;
+            transform-origin: 0;
+            transform: scaleX(0);
+            opacity: 0;
+        }
+        .giveUp{
+            position: relative;
+            width: 100px;
+            height: 80px;
+            cursor: pointer;
+        }
+        &:hover{
+            &::before{
+                right: -50px;
+                opacity: 1;
+            }
+            &::after{
+                transform: scaleX(1);
+                transition-delay: .2s;
+                opacity: 1;
+            }
+            .giveUp{
+                opacity: .8;
+            }
+        }
+    }
+    .card{
+        text-align: center;
+        width: 500px;
+        height: 400px;
+        padding: 0;
+        background: rgba(7, 15, 52, 0.4);
+        overflow: hidden;
+        &.flip{
+            transform: rotate(180deg);
+            div{
+                .square{
+                    transform: rotate(180deg);
+                }
+            }
+        }
+        &.started{
+            align-self: center;
+            margin-top: 0;
+        }
+        .playgrid{
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            position: relative;
+            @extend %disablingBlock;
+            div{
+                border-left: 1.5px solid #656b778f;
+                border-top: 1.5px solid #656b778f;
+                user-select: none;
+                position: relative;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &.blackSquare{
+                    background: rgba(120, 253, 191, 0.37);
+                }
+                &.whiteSquare{
+                    background: rgba(255, 255, 255, 0.616);
+                }
+                &.highlight{
+                    background:rgb(216, 177, 5);
+                }
+                .symbolPlayed{
+                    width: 40px;
+                    height: 40px;
+                }
+                &.disabled{
+                    pointer-events: none;
+                    cursor: initial;
+                    &::before{
+                        background: #31374442;
+                    }
+                }
+                &::before{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    background: transparent;
+                    transition: .3s;
+                }
+                &:hover{
+                    &::before{
+                        background: #31374442;
+                    }
+                }
+            }
+        }
+        margin-bottom: 40px;
+    }
+    .playerMenu{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        .playerCard{
+            min-width: 250px;
+            margin: 20px;
+            text-align: initial;
+            transition: .4s;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            &.black{
+                background: black;
+            }
+            &.white{
+                background: white;
+                color: black;
+                div:nth-child(1){
+                    border-color:rgb(139, 117, 17);
+                }
+            }
+            &.disabled{
+                opacity: .5;
+                transform: scale(.9);
+            }
+            div{
+                &:nth-child(1){
+                    left: 10px;
+                    top: 0;    
+                }
+            }
+            h2, h3{
+                margin-top: 0;
+                margin-left: 80px;
+            }
+        }
+    }
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    h4{
+        margin: 0;
+        padding: 0;
+    }
+    span{
+        font-weight: 400;
+    }
+    button{
+        margin-top: 30px;
+    }
+}
+
+.invitationLink{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.promotionContent{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    .promotionBtn{
+        width: 55px;
+        height: 55px;
+        margin: 0 5px;
+        background: rgba(49, 121, 163, 0.452);
+        border: 1px solid black;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg{
+            height: 50px;
+        }
+        &:hover{
+            opacity: .6;
+        }
+    }
+}
