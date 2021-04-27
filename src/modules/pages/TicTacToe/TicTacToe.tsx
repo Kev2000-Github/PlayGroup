@@ -90,6 +90,7 @@ export const Tictactoe = () => {
                 setConclusion(msg);
             })
             tictactoeSocket.on("leave", () => {
+                setDisabled(true);
                 toast("The other player has left the game");
             })
             tictactoeSocket.on("retry", ({ uuid }) => {
@@ -179,7 +180,7 @@ export const Tictactoe = () => {
                                 :
                                 ""
                             }
-                            <Button disabled={retryBtn} variant="contained" color="secondary" onClick={retry} >retry</Button>
+                            <Button disabled={disabled || retryBtn} variant="contained" color="secondary" onClick={retry} >retry</Button>
                             <Button variant="contained" color="secondary" onClick={leave}>leave</Button>
                         </div>
                     </Popup>
