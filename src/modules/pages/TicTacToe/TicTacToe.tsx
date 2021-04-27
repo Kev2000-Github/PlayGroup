@@ -50,6 +50,7 @@ export const Tictactoe = () => {
     const [disabled, setDisabled] = useState(false);
     const [retryBtn, setRetryBtn] = useState(false);
     const [conclusion, setConclusion] = useState("");
+    const [leaveState, setLeaveState] = useState(false);
     const history = useHistory();
     const textAreaRef = useRef(null);
     const userState = useAppSelector(state => state.userReducer);
@@ -91,18 +92,21 @@ export const Tictactoe = () => {
             })
             tictactoeSocket.on("leave", () => {
                 setDisabled(true);
+                setLeaveState(true);
                 toast("The other player has left the game");
             })
             tictactoeSocket.on("retry", ({ uuid }) => {
                 setMatrix(matrixInitialState);
                 setConclusion("");
                 setRetryBtn(false);
-
+                setLeaveState(false);
                 if (uuid === userState.uuid) setDisabled(false);
             })
             tictactoeSocket.on("player disconnected", () => {
-                toast("The other player has disconnected");
                 setDisabled(true);
+                setLeaveState(true);
+                setConclusion(WIN);
+                toast("The other player has disconnected");
             })
         }
         return () => { isMounted = false };
@@ -134,7 +138,10 @@ export const Tictactoe = () => {
     const retry = () => {
         const playerId = userState.uuid;
         tictactoeSocket.emit("retry", { roomId: roomState.roomId, playerId }, (data: string) => {
-            if (data === "retry registered") setRetryBtn(true);
+            if (data === "retry registered") {
+                setRetryBtn(true);
+                setLeaveState(true);
+            }
         });
     }
 
@@ -175,12 +182,12 @@ export const Tictactoe = () => {
                     <Popup condition={[WIN, LOSE, DRAW].includes(conclusion)}>
                         <div className={tictactoeStyle.content}>
                             <h4>{conclusion.toUpperCase()}</h4>
-                            {retryBtn ?
+                            {retryBtn && leaveState ?
                                 <span>wait for the other player...</span>
                                 :
                                 ""
                             }
-                            <Button disabled={disabled || retryBtn} variant="contained" color="secondary" onClick={retry} >retry</Button>
+                            <Button disabled={leaveState} variant="contained" color="secondary" onClick={retry} >retry</Button>
                             <Button variant="contained" color="secondary" onClick={leave}>leave</Button>
                         </div>
                     </Popup>
