@@ -38,15 +38,15 @@ const joinToRoom = async (formData: RoomType) => {
     }
 }
 
-const getRoom = async (roomId: string, game: "tictactoe" | "chess") => {
+const getAvailableRoom = async (roomId: string, game: "tictactoe" | "chess") => {
     let response: any = null;
     switch (game) {
         case "tictactoe":
-            response = await axios.get(endpoints.tictactoe.GET_ROOM + "/" + roomId);
+            response = await axios.get(endpoints.tictactoe.GET_ROOM + "/" + roomId + "?available=1");
             if (response) return response.data;
             break;
         case "chess":
-            response = await axios.get(endpoints.chess.GET_ROOM + "/" + roomId);
+            response = await axios.get(endpoints.chess.GET_ROOM + "/" + roomId + "?available=1");
             if (response) return response.data;
             break;
     }
@@ -54,6 +54,6 @@ const getRoom = async (roomId: string, game: "tictactoe" | "chess") => {
 
 export const roomServices = {
     createRoom,
-    getRoom,
+    getAvailableRoom,
     joinToRoom
 }

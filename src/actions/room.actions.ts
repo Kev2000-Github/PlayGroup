@@ -61,22 +61,30 @@ const joinToRoom = (formData: RoomType, history: any) => {
                 }
             })
             .catch((err) => {
-                console.log(err);
-                dispatch(failure());
-                history.push(paths.HOME)
-                dispatch(alertActions.error("Error, something went wrong"));
+                if (err.response) {
+                    if (err.response.data.error === "Room") {
+                        dispatch(failure());
+                        history.push(paths.HOME)
+                        dispatch(alertActions.error(err.response.data.message));
+                    }
+                }
+                else {
+                    dispatch(failure());
+                    history.push(paths.HOME)
+                    dispatch(alertActions.error("Error, something went wrong"));
+                }
             })
     }
 }
 
-const getRoom = (roomId: string, game: "tictactoe" | "chess", history: any) => {
+const getAvailableRoom = (roomId: string, game: "tictactoe" | "chess", history: any) => {
     const request = () => ({ type: roomConstants.ROOM_REQUEST });
     const success = () => ({ type: roomConstants.ROOM_SUCCESS });
     const failure = () => ({ type: roomConstants.ROOM_FAILURE });
 
     return (dispatch: any) => {
         dispatch(request());
-        roomServices.getRoom(roomId, game)
+        roomServices.getAvailableRoom(roomId, game)
             .then((data) => {
                 dispatch(success());
                 const room = data.rooms;
@@ -85,9 +93,18 @@ const getRoom = (roomId: string, game: "tictactoe" | "chess", history: any) => {
                 }
             })
             .catch((err) => {
-                console.log(err);
-                dispatch(failure());
-                dispatch(alertActions.error("Error, something went wrong"));
+                if (err.response) {
+                    if (err.response.data.error === "Room") {
+                        dispatch(failure());
+                        history.push(paths.HOME)
+                        dispatch(alertActions.error(err.response.data.message));
+                    }
+                }
+                else {
+                    dispatch(failure());
+                    history.push(paths.HOME)
+                    dispatch(alertActions.error("Error, something went wrong"));
+                }
             })
     }
 }
@@ -106,7 +123,7 @@ const stopWaitingUser = () => {
 
 export const roomActions = {
     createRoom,
-    getRoom,
+    getAvailableRoom,
     joinToRoom,
     waitUser,
     stopWaitingUser

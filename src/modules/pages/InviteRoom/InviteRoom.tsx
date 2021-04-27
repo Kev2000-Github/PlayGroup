@@ -22,13 +22,13 @@ export const InviteRoom = () => {
 
     useEffect(() => {
         const gameName = game.toLowerCase() as "tictactoe" | "chess";
-        dispatch(roomActions.getRoom(roomId, gameName, history));
+        dispatch(roomActions.getAvailableRoom(roomId, gameName, history));
         dispatch(helperActions.getRandomPic());
     }, [])
 
     const submit = (e: any) => {
         e.preventDefault();
-        const gameName = game.toLowerCase();
+        const gameName = game.toLowerCase() as "tictactoe" | "chess";
         const nickname = userState.user ? userState.user : SUGESTED_NAME;
         const formData = {
             roomId,
@@ -38,6 +38,7 @@ export const InviteRoom = () => {
                 nickname
             }
         }
+        dispatch(roomActions.getAvailableRoom(roomId, gameName, history));
         dispatch(userActions.createUser(nickname, formData.player.uuid));
         dispatch(roomActions.joinToRoom(formData, history));
     }

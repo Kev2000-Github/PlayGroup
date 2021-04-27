@@ -9,6 +9,7 @@ import { paths } from "../utils/constants/paths";
 import { ToastContainer, toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from "../helpers/hooks";
 import { alertActions } from "../actions/alert.actions";
+import { NotFound } from "./pages/404/notFound";
 import 'react-toastify/dist/ReactToastify.css';
 const { useEffect } = React;
 
@@ -46,6 +47,7 @@ function App() {
         <Route exact path={paths.TICTACTOE} component={Tictactoe} />
         <Route exact path={paths.CHESS} component={Chess} />
         <Route exact path={paths.INVITE_ROOM} component={InviteRoom} />
+        <Route component={NotFound} />
       </Switch>
       <ToastContainer />
     </Layout>
