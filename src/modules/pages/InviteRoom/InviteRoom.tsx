@@ -46,7 +46,7 @@ export const InviteRoom = () => {
     return (
         <>
             {roomState.requesting ?
-                "loading..."
+                ""
                 :
                 <div className={inviteRoomStyle.main}>
                     <Card>

@@ -17,7 +17,7 @@ import { Rook } from "../../components/SVG/Chess/Rook";
 import { paths } from '../../../utils/constants/paths';
 import { SymbolBlank } from '../../components/SVG/Tictactoe/SymbolBlank';
 import { roomActions } from '../../../actions/room.actions';
-import { displayMoves, WIN, LOSE, DRAW, setupChessBoard, setupChessBoardColors, move, checkAvailablePromotion } from "./Chess.utils";
+import { displayMoves, WIN, LOSE, DRAW, setupChessBoard, setupChessBoardColors } from "./Chess.utils";
 import { ButtonSVG, ButtonPressedSVG } from '../../components/SVG/ButtonSVG';
 import { alertActions } from '../../../actions/alert.actions';
 const { useEffect, useState, useRef } = React;
@@ -237,7 +237,7 @@ export const Chess = () => {
     return (
         <>
             {roomState.requesting ?
-                "loading..."
+                ""
                 :
                 <div className={`${chessStyle.main}`}>
                     <div className={chessStyle.playerMenu}>

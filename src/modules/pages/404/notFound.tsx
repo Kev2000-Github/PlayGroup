@@ -11,7 +11,9 @@ export const NotFound = () => {
                 <h1>Error <span className={notFoundStyle.errorcode}>404</span></h1>
                 <p className={notFoundStyle.output}>You're not supposed to be here, lost soul, please go back to where you came</p>
                 <p className={notFoundStyle.output}>Good luck on your way back.</p>
-                <p className={notFoundStyle.output}><Link to={paths.HOME}>return to the homepage</Link> / <a href="#">stay here</a>.</p>
+                <p className={notFoundStyle.output}>
+                    <Link to={paths.HOME}>return to the homepage</Link> / <a href="#main">stay here</a>.
+                </p>
             </div>
         </div>
     )

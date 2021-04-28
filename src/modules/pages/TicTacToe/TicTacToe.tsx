@@ -148,7 +148,7 @@ export const Tictactoe = () => {
     return (
         <>
             {roomState.requesting ?
-                "loading..."
+                ""
                 :
                 <div className={`${tictactoeStyle.main}`}>
                     <PlayerCard
